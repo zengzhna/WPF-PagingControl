@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:WpfPaging.Controls"
+                    xmlns:conv="clr-namespace:WpfPaging.Conterver">
+    <conv:IntToStringConverter x:Key="IntToStringConverter"/>
+
+    <Style TargetType="{x:Type controls:Paging}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:Paging}">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center" Margin="10">
+                            <Run Text="Total:"/>
+                            <Run x:Name="PART_TotalNum" Text="{TemplateBinding TotalNum, Converter={StaticResource IntToStringConverter}}"/>
+                            </TextBlock>
+                            <ComboBox x:Name="PART_PageSize" VerticalAlignment="Center" Margin="10">
+                                <ComboBoxItem Content="30" IsSelected="True"></ComboBoxItem>
+                                <ComboBoxItem Content="50"></ComboBoxItem>
+                                <ComboBoxItem Content="100"></ComboBoxItem>
+                                <ComboBoxItem Content="200"></ComboBoxItem>
+                                <ComboBoxItem Content="500"></ComboBoxItem>
+                                <ComboBoxItem Content="1000"></ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button x:Name="PART_FirstPage" Content="First" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
+                            <Button x:Name="PART_PreviousPage" Content="Previous" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
+                            <StackPanel x:Name="PART_Content" Orientation="Horizontal">
+                            </StackPanel>
+                            <Button x:Name="PART_NextPage" Content="Next" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
+                            <Button x:Name="PART_LastPage" Content="Last" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
+                            <TextBlock VerticalAlignment="Center" Margin="0,0,20,0">
+                                <Run Text="Count:"/>
+                                <Run x:Name="PART_PageCount" Text="{TemplateBinding PageCount, Converter={StaticResource IntToStringConverter}}"/>
+                            </TextBlock>
+                            <TextBox x:Name="PART_GotoPageNum"  Margin="0,0,5,0" VerticalAlignment="Center" Text="{TemplateBinding GotoPageNum, Converter={StaticResource IntToStringConverter}}" MinWidth="30"></TextBox>
+                            <Button x:Name="PART_GotoPage" Content="Goto" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
