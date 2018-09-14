@@ -18,19 +18,16 @@ namespace WpfPaging.ViewModel
 
 
         private List<DataGridListModel> _ItemsSourceList;
-        private int _PageCount = 1;      
-        private int _CurrentPage = 1;   
-        private int _TotalNum = 0;     
-        private int _GotoPageNum = 1;  
+        private int _Total;
 
 
         public List<DataGridListModel> List { get; set; }
         public List<DataGridListModel> ItemsSourceList { get => _ItemsSourceList; set { _ItemsSourceList = value; RaisePropertyChanged("ItemsSourceList"); } }
-        public int PageCount { get => _PageCount; set { _PageCount = value; RaisePropertyChanged("PageCount"); } }
+        public int PageCount { get ; set ; }
         public int PageSize { get; set; }
-        public int CurrentPage { get => _CurrentPage; set { _CurrentPage = value; RaisePropertyChanged("CurrentPage"); } }
-        public int TotalNum { get => _TotalNum; set { _TotalNum = value; RaisePropertyChanged("TotalNum"); } }
-        public int GotoPageNum { get => _GotoPageNum; set { _GotoPageNum = value; RaisePropertyChanged("GotoPageNum"); } }
+        public int CurrentPage { get ; set ; }
+        public int Total { get => _Total; set { _Total = value; RaisePropertyChanged("Total"); } }
+        public int GotoPageNum { get ; set ; }
 
          
         public DelegateCommand FirstPageCommand { get; set; }
@@ -59,7 +56,6 @@ namespace WpfPaging.ViewModel
             {
                 List.Add(new DataGridListModel { ID = i, Name = i.ToString() });
             }
-            TotalNum = List.Count;
         }
 
         private void OnFirstPageCommand()
@@ -86,22 +82,22 @@ namespace WpfPaging.ViewModel
         {
             RefreshPage();
         }
-        private void RefreshPage()
-        {
-            ItemsSourceList = List.Where(x => x.ID >= (CurrentPage - 1) * PageSize && x.ID < CurrentPage * PageSize).ToList();
-        }
         private void OnPageSizeChangedCommand()
         {
-            if (List.Count % PageSize == 0)
+            if (List != null)
             {
-                PageCount = List.Count / PageSize;
+                Total = List.Count;
+                RefreshPage();
             }
-            else
-            {
-                PageCount = List.Count / PageSize + 1;
-            }
-            RefreshPage();
         }
+        private void RefreshPage()
+        {
+            if (List != null)
+            {
+                ItemsSourceList = List.Where(x => x.ID >= (CurrentPage - 1) * PageSize && x.ID < CurrentPage * PageSize).ToList();
+            }
+        }
+
     }
     public class DataGridListModel
     {

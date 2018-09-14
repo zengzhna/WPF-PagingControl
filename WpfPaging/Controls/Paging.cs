@@ -13,7 +13,7 @@ using System.Windows.Media;
 namespace WpfPaging.Controls
 {
     /// <summary>
-    /// 分页控件
+    /// WpfPaging Conntrol
     /// </summary>
     [TemplatePart(Name = PART_PREVIOUSPAGE, Type = typeof(Button))]
     [TemplatePart(Name = PART_NEXTPAGE, Type = typeof(Button))]
@@ -23,13 +23,13 @@ namespace WpfPaging.Controls
     [TemplatePart(Name = PART_CONTENT, Type = typeof(StackPanel))]
     //[TemplatePart(Name = PART_PAGECOUNT, Type = typeof(Run))]
     //[TemplatePart(Name = PART_CURREENTPAGE, Type = typeof(Run))]
-    [TemplatePart(Name = PART_TOTALNUM, Type = typeof(Run))]
+    [TemplatePart(Name = PART_TOTAL, Type = typeof(Run))]
     [TemplatePart(Name = PART_GOTOPAGE, Type = typeof(Button))]
 
 
     public class Paging : Control
     {
-        #region 字段 
+        #region Field 
         private const String PART_PREVIOUSPAGE = "PART_PreviousPage";
         private const String PART_NEXTPAGE = "PART_NextPage";
         private const String PART_FIRSTPAGE = "PART_FirstPage";
@@ -38,7 +38,7 @@ namespace WpfPaging.Controls
         private const String PART_CONTENT = "PART_Content";
         private const String PART_PAGECOUNT = "PART_PageCount";
         private const String PART_CURREENTPAGE = "PART_CurrentPage";
-        private const String PART_TOTALNUM = "PART_TotalNum";
+        private const String PART_TOTAL = "PART_Total";
         private const String PART_GOTOPAGE = "PART_GotoPage";
         private const String PART_GOTOPAGENUM = "PART_GotoPageNum";
 
@@ -59,9 +59,12 @@ namespace WpfPaging.Controls
         #region DependecyProperty
         public static readonly DependencyProperty CurrentPageProperty;
         public static readonly DependencyProperty PageCountProperty;
-        public static readonly DependencyProperty TotalNumProperty;
+        public static readonly DependencyProperty PageCountTextProperty;
+        public static readonly DependencyProperty TotalProperty;
+        public static readonly DependencyProperty TotalTextProperty;
         public static readonly DependencyProperty PageSizeProperty;
         public static readonly DependencyProperty GotoPageNumProperty;
+        public static readonly DependencyProperty GotoPageNumTextProperty;
 
 
         public int CurrentPage
@@ -75,10 +78,20 @@ namespace WpfPaging.Controls
             get { return (int)GetValue(PageCountProperty); }
             set { SetValue(PageCountProperty, value); }
         }
-        public int TotalNum
+        public string PageCountText
         {
-            get { return (int)GetValue(TotalNumProperty); }
-            set { SetValue(TotalNumProperty, value); }
+            get { return (string)GetValue(PageCountTextProperty); }
+            private set { SetValue(PageCountTextProperty, value); }
+        }
+        public int Total
+        {
+            get { return (int)GetValue(TotalProperty); }
+            set { SetValue(TotalProperty, value); }
+        }
+        public string TotalText
+        {
+            get { return (string)GetValue(TotalTextProperty); }
+            private set { SetValue(TotalTextProperty, value); }
         }
         public int PageSize
         {
@@ -89,6 +102,11 @@ namespace WpfPaging.Controls
         {
             get { return (int)GetValue(GotoPageNumProperty); }
             set { SetValue(GotoPageNumProperty, value); }
+        }
+        public string GotoPageNumText
+        {
+            get { return (string)GetValue(GotoPageNumTextProperty); }
+            private set { SetValue(GotoPageNumTextProperty, value); }
         }
 
         #endregion
@@ -154,9 +172,12 @@ namespace WpfPaging.Controls
             PageSizeChangedEvent = EventManager.RegisterRoutedEvent("PageSizeChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
             CurrentPageProperty = DependencyProperty.Register("CurrentPage", typeof(int), typeof(Paging), new PropertyMetadata(1, new PropertyChangedCallback(OnCurrentPageChanged)));
             PageCountProperty = DependencyProperty.Register("PageCount", typeof(int), typeof(Paging), new PropertyMetadata(1, new PropertyChangedCallback(OnPageCountChanged)));
-            TotalNumProperty = DependencyProperty.Register("TotalNum", typeof(int), typeof(Paging), new PropertyMetadata(0));
-            PageSizeProperty = DependencyProperty.Register("PageSize", typeof(int), typeof(Paging), new PropertyMetadata(0));
+            PageCountTextProperty = DependencyProperty.Register("PageCountText", typeof(string), typeof(Paging), new PropertyMetadata("0"));
+            TotalProperty = DependencyProperty.Register("Total", typeof(int), typeof(Paging), new PropertyMetadata(0,new PropertyChangedCallback(OnTotalChanged)));
+            TotalTextProperty = DependencyProperty.Register("TotalText", typeof(string), typeof(Paging),new PropertyMetadata("0"));
+            PageSizeProperty = DependencyProperty.Register("PageSize", typeof(int), typeof(Paging), new PropertyMetadata(0,new PropertyChangedCallback(OnPageSizeChanged)));
             GotoPageNumProperty = DependencyProperty.Register("GotoPageNum", typeof(int), typeof(Paging), new PropertyMetadata(1));
+            GotoPageNumTextProperty = DependencyProperty.Register("GotoPageNumText", typeof(string), typeof(Paging), new PropertyMetadata("1", new PropertyChangedCallback(OnGotoPageNumTextChanged)));
         }
 
         public override void OnApplyTemplate()
@@ -194,16 +215,47 @@ namespace WpfPaging.Controls
         private static void OnCurrentPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (((Paging)d).IsLoaded)
+                ((Paging)d).UpdateCurrentGotoPageNum();
+        }
+        private void UpdateCurrentGotoPageNum()
+        {
+            GotoPageNum = CurrentPage;
+            GotoPageNumText = CurrentPage.ToString();
+        }
+        private static void OnTotalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((Paging)d).IsLoaded)
+                ((Paging)d).UpdatePageCount();
+            
+        }
+        private void UpdatePageCount()
+        {
+            TotalText = Total.ToString();
+            if (Total % PageSize == 0 && Total > 0)
+                PageCount = Total / PageSize;
+            else
+                PageCount = Total / PageSize + 1;
+        }
+        private static void OnGotoPageNumTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((Paging)d).IsLoaded)
                 ((Paging)d).UpdateGotoPageNum();
         }
         private void UpdateGotoPageNum()
         {
-            GotoPageNum = CurrentPage;
+            if (!string.IsNullOrEmpty(GotoPageNumText))
+            {
+                GotoPageNum = int.Parse(GotoPageNumText);
+            }
         }
-
+        private static void OnPageSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((Paging)d).IsLoaded)
+                ((Paging)d).UpdatePageCount();
+        }
         #endregion
 
-        #region EventMothod
+        #region EventMethod
 
         /// <summary>
         /// Goto LastPage
@@ -345,7 +397,7 @@ namespace WpfPaging.Controls
             {
                 CurrentPage = 1;
             }
-            else if (GotoPageNum > PageCount)
+            else if (GotoPageNum > PageCount && PageCount > 0)
             {
                 CurrentPage = PageCount;
             }
@@ -450,7 +502,6 @@ namespace WpfPaging.Controls
             {
                 var item = combobox.SelectedItem as ComboBoxItem;
                 this.PageSize = Convert.ToInt32(item.Content.ToString());    
-                InitPART_Content();
                 OnPageSizeChanged();
             }
         }
@@ -459,34 +510,39 @@ namespace WpfPaging.Controls
         {
             if (sender is TextBox textBox)
             {
+                if (string.IsNullOrEmpty(textBox.Text))
+                {
+                    return;
+                }
                 Regex re = new Regex(@"[^0-9]+");
                 if (re.IsMatch(textBox.Text) || textBox.Text == "0")
                 {
-                    this.GotoPageNum = 0;
-                    this.GotoPageNum = CurrentPage;
+                    this.GotoPageNumText = string.Empty;
+                    this.GotoPageNumText = CurrentPage.ToString();
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(textBox.Text))
+                    if (int.Parse(textBox.Text) > PageCount && PageCount > 0)
                     {
-                        if (int.Parse(textBox.Text) > PageCount)
-                        {
-                            this.GotoPageNum = 0;
-                            this.GotoPageNum = PageCount;
-                        }
-                        else
-                        {
-                            this.GotoPageNum = int.Parse(textBox.Text);
-                        }
+                        this.GotoPageNumText = string.Empty;
+                        this.GotoPageNumText = PageCount.ToString();
+                    }
+                    else
+                    {
+                        this.GotoPageNumText = textBox.Text;
                     }
                 }
-            }   
+            }
         }
         private void PART_GotoPageNum_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             if (sender is TextBox textBox)
             {
                 if (textBox.SelectionStart == 0 && e.Text == "0")
+                {
+                    e.Handled = true;
+                }
+                if (PageCount == 0)
                 {
                     e.Handled = true;
                 }
@@ -501,6 +557,7 @@ namespace WpfPaging.Controls
         /// </summary>
         private void InitPART_Content()
         {
+            PageCountText = PageCount.ToString();
             this.CurrentPage = 1;
             SetNextpageAndPreviouspageState();
             this.PART_Content.Children.RemoveRange(0, PART_Content.Children.Count);

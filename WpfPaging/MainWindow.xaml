@@ -22,9 +22,9 @@
             </DataGrid.Columns>
         </DataGrid>
         <controls:Paging x:Name="paging" Grid.Row="1" VerticalAlignment="Center"
-                         PageSize="{Binding PageSize,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                         PageCount="{Binding PageCount}"
-                         TotalNum="{Binding TotalNum}"
+                         PageSize="{Binding PageSize, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         PageCount="{Binding PageCount,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         Total="{Binding Total, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          CurrentPage="{Binding CurrentPage, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          GotoPageNum="{Binding GotoPageNum, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
