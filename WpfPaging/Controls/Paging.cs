@@ -51,8 +51,9 @@ namespace WpfPaging.Controls
         private Button PART_GotoPage;
         private TextBox PART_GotoPageNum;
 
-        private PagerType mPagerType = PagerType.Default;  //当前分页控件类型，复杂、默认
-        private List<int> mCurrentPagers = new List<int>(); //当前分页控件显示的页码索引
+        private PagerType mPagerType = PagerType.Default;  //Current paging control type, complex, default
+        private List<int> mCurrentPagers = new List<int>(); //The page number index displayed by the current paging control
+        private int PageNumber = 7;  //Generate maximum page number
 
         #endregion
 
@@ -562,7 +563,7 @@ namespace WpfPaging.Controls
             SetNextpageAndPreviouspageState();
             this.PART_Content.Children.RemoveRange(0, PART_Content.Children.Count);
             this.mCurrentPagers.RemoveRange(0, mCurrentPagers.Count);
-            if ((this.PageCount <= 7))
+            if ((this.PageCount <= PageNumber))
             {
                 this.mPagerType = PagerType.Default;
                 for (int i = 0; i < this.PageCount; i++)
@@ -587,7 +588,7 @@ namespace WpfPaging.Controls
             else
             {
                 this.mPagerType = PagerType.Complex;
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < PageNumber; i++)
                 {
                     var pagenumBtn = new Button()
                     {
@@ -600,7 +601,7 @@ namespace WpfPaging.Controls
                     };
                     pagenumBtn.Click += PagenumBtn_Click;
                     if (i.Equals(0)) pagenumBtn.Tag = 1;  //Set the left control point
-                    if (i.Equals(6)) pagenumBtn.Tag = 7;  //Set the right control point
+                    if (i.Equals(6)) pagenumBtn.Tag = PageNumber;  //Set the right control point
                     this.mCurrentPagers.Add((i + 1));
                     if (this.PART_Content != null)
                     {
@@ -652,7 +653,7 @@ namespace WpfPaging.Controls
             {
                 for (int i = 0; i < this.mCurrentPagers.Count; i++)
                 {
-                    this.mCurrentPagers[i] = this.mCurrentPagers[i] - _lastIndex + 7;
+                    this.mCurrentPagers[i] = this.mCurrentPagers[i] - _lastIndex + PageNumber;
                 }
             }
         }
@@ -676,7 +677,7 @@ namespace WpfPaging.Controls
             {
                 for (int i = 0; i < this.mCurrentPagers.Count; i++)
                 {
-                    this.mCurrentPagers[i] = this.mCurrentPagers[i] - _lastIndex + GotoPageNum + 7 - 2;
+                    this.mCurrentPagers[i] = this.mCurrentPagers[i] - _lastIndex + GotoPageNum + PageNumber - 2;
                 }
             }
         }
@@ -760,7 +761,7 @@ namespace WpfPaging.Controls
                     {
                         if (PageCount >= CurrentPage)
                         {
-                            pageNumBtn.Content = addSubtract == AddSubtract.Add ? (Convert.ToInt32(pageNumBtn.Content) + PageCount - _lastIndex).ToString() : (Convert.ToInt32(pageNumBtn.Content) - _lastIndex + 7).ToString();
+                            pageNumBtn.Content = addSubtract == AddSubtract.Add ? (Convert.ToInt32(pageNumBtn.Content) + PageCount - _lastIndex).ToString() : (Convert.ToInt32(pageNumBtn.Content) - _lastIndex + PageNumber).ToString();
                         }
                     }
                     _index++;
@@ -782,7 +783,7 @@ namespace WpfPaging.Controls
                     {
                         if (PageCount >= CurrentPage)
                         {
-                            pageNumBtn.Content = addSubtract == AddSubtract.Add ? (Convert.ToInt32(pageNumBtn.Content) + GotoPageNum - _lastIndex + 1).ToString() : (Convert.ToInt32(pageNumBtn.Content) - _lastIndex + GotoPageNum + 7 - 2).ToString();
+                            pageNumBtn.Content = addSubtract == AddSubtract.Add ? (Convert.ToInt32(pageNumBtn.Content) + GotoPageNum - _lastIndex + 1).ToString() : (Convert.ToInt32(pageNumBtn.Content) - _lastIndex + GotoPageNum + PageNumber - 2).ToString();
                         }
                     }
                     _index++;
@@ -802,7 +803,7 @@ namespace WpfPaging.Controls
                         this._MaintainCurrentPagersSingle(AddSubtract.subtract);
                     }
                 }
-                if (pagenumBtn.Tag.Equals(7))
+                if (pagenumBtn.Tag.Equals(PageNumber))
                 {
                     if (this.CurrentPage < PageCount)
                     {
@@ -822,7 +823,7 @@ namespace WpfPaging.Controls
         {
             if (this.mPagerType == PagerType.Complex)
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < PageNumber; i++)
                 {
                     var beforepagenumBtn = this.PART_Content.Children[i] as Button;
                     beforepagenumBtn.Foreground = Brushes.Black;    //Set page number button color

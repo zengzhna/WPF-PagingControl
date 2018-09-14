@@ -56,6 +56,7 @@ namespace WpfPaging.ViewModel
             {
                 List.Add(new DataGridListModel { ID = i, Name = i.ToString() });
             }
+            Total = List.Count;
         }
 
         private void OnFirstPageCommand()
@@ -84,11 +85,7 @@ namespace WpfPaging.ViewModel
         }
         private void OnPageSizeChangedCommand()
         {
-            if (List != null)
-            {
-                Total = List.Count;
-                RefreshPage();
-            }
+            RefreshPage();
         }
         private void RefreshPage()
         {
