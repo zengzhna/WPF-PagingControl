@@ -53,7 +53,7 @@ namespace WpfPaging.Controls
 
         private PagerType mPagerType = PagerType.Default;  //Current paging control type, complex, default
         private List<int> mCurrentPagers = new List<int>(); //The page number index displayed by the current paging control
-        private int PageNumber = 7;  //Generate maximum page number
+        private int PageNumber = 5;  //Generate maximum page number
 
         #endregion
 
@@ -272,7 +272,7 @@ namespace WpfPaging.Controls
             {
                 this._RefreshFirstOrLastPager(AddSubtract.Add);
                 this._MaintainCurrentPagersFirstOrLast(AddSubtract.Add);
-                this.SetLinkButtonFocus(6);
+                this.SetLinkButtonFocus(PageNumber - 1);
             }
             else
             {
@@ -323,7 +323,7 @@ namespace WpfPaging.Controls
                     OnPageChanged(NextPageEvent);
                     return;
                 }
-                if (_index == 6)
+                if (_index == PageNumber - 1)
                 {
                     if (this.CurrentPage == this.PageCount - 1)
                     {
@@ -444,7 +444,7 @@ namespace WpfPaging.Controls
                     {
                         this._RefreshFirstOrLastPager(AddSubtract.Add);
                         this._MaintainCurrentPagersFirstOrLast(AddSubtract.Add);
-                        this.SetLinkButtonFocus(6);
+                        this.SetLinkButtonFocus(PageNumber - 1);
                     }
                 }
             }
@@ -468,7 +468,7 @@ namespace WpfPaging.Controls
                 this._RefreshPagerBtn(pagenumBtn);
                 if (_index == 0 && this.CurrentPage > 1)
                     SetLinkButtonFocus(_index + 1);
-                else if (_index == 6 && this.CurrentPage < PageCount)
+                else if (_index == PageNumber - 1 && this.CurrentPage < PageCount)
                     SetLinkButtonFocus(_index - 1);
                 else
                     SetLinkButtonFocus(_index);
@@ -601,7 +601,7 @@ namespace WpfPaging.Controls
                     };
                     pagenumBtn.Click += PagenumBtn_Click;
                     if (i.Equals(0)) pagenumBtn.Tag = 1;  //Set the left control point
-                    if (i.Equals(6)) pagenumBtn.Tag = PageNumber;  //Set the right control point
+                    if (i.Equals(PageNumber - 1)) pagenumBtn.Tag = PageNumber;  //Set the right control point
                     this.mCurrentPagers.Add((i + 1));
                     if (this.PART_Content != null)
                     {
