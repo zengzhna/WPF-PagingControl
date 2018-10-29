@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:local="clr-namespace:WpfPaging"
         xmlns:controls="clr-namespace:WpfPaging.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -28,27 +27,12 @@
                          CurrentPage="{Binding CurrentPage, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          GotoPageNum="{Binding GotoPageNum, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="FirstPage">
-                    <prism:InvokeCommandAction Command="{Binding FirstPageCommand}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="PreviousPage">
-                    <prism:InvokeCommandAction Command="{Binding PreviousPageCommand}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="NextPage">
-                    <prism:InvokeCommandAction Command="{Binding NextPageCommand}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="LastPage">
-                    <prism:InvokeCommandAction Command="{Binding LastPageCommand}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="GotoPage">
-                    <prism:InvokeCommandAction Command="{Binding GotoPageCommand}"/>
-                </i:EventTrigger>
                 <i:EventTrigger EventName="PageChanged">
                     <prism:InvokeCommandAction Command="{Binding PageChangedCommand}"/>
                 </i:EventTrigger>
-                <i:EventTrigger EventName="PageSizeChanged">
+                <!--<i:EventTrigger EventName="PageSizeChanged">
                     <prism:InvokeCommandAction Command="{Binding PageSizeChangedCommand}"/>
-                </i:EventTrigger>
+                </i:EventTrigger>-->
             </i:Interaction.Triggers>
         </controls:Paging>
     </Grid>

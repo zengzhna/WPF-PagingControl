@@ -114,42 +114,43 @@ namespace WpfPaging.Controls
 
         #region RoutedEvent
 
-        public static readonly RoutedEvent FirstPageEvent;
-        public static readonly RoutedEvent PreviousPageEvent;
-        public static readonly RoutedEvent NextPageEvent;
-        public static readonly RoutedEvent LastPageEvent;
-        public static readonly RoutedEvent GotoPageEvent;
+        //public static readonly RoutedEvent FirstPageEvent;
+        //public static readonly RoutedEvent PreviousPageEvent;
+        //public static readonly RoutedEvent NextPageEvent;
+        //public static readonly RoutedEvent LastPageEvent;
+        //public static readonly RoutedEvent GotoPageEvent;
         public static readonly RoutedEvent PageChangedEvent;
         public static readonly RoutedEvent PageSizeChangedEvent;
 
-        public event RoutedEventHandler FirstPage
-        {
-            add { AddHandler(FirstPageEvent, value); }
-            remove { RemoveHandler(FirstPageEvent, value); }
-        }
+        //public event RoutedEventHandler FirstPage
+        //{
+        //    add { AddHandler(FirstPageEvent, value); }
+        //    remove { RemoveHandler(FirstPageEvent, value); }
+        //}
 
-        public event RoutedEventHandler PreviousPage
-        {
-            add { AddHandler(PreviousPageEvent, value); }
-            remove { RemoveHandler(PreviousPageEvent, value); }
-        }
+        //public event RoutedEventHandler PreviousPage
+        //{
+        //    add { AddHandler(PreviousPageEvent, value); }
+        //    remove { RemoveHandler(PreviousPageEvent, value); }
+        //}
 
-        public event RoutedEventHandler NextPage
-        {
-            add { AddHandler(NextPageEvent, value); }
-            remove { RemoveHandler(NextPageEvent, value); }
-        }
+        //public event RoutedEventHandler NextPage
+        //{
+        //    add { AddHandler(NextPageEvent, value); }
+        //    remove { RemoveHandler(NextPageEvent, value); }
+        //}
 
-        public event RoutedEventHandler LastPage
-        {
-            add { AddHandler(LastPageEvent, value); }
-            remove { RemoveHandler(LastPageEvent, value); }
-        }
-        public event RoutedEventHandler GotoPage
-        {
-            add { AddHandler(GotoPageEvent, value); }
-            remove { RemoveHandler(GotoPageEvent, value); }
-        }
+        //public event RoutedEventHandler LastPage
+        //{
+        //    add { AddHandler(LastPageEvent, value); }
+        //    remove { RemoveHandler(LastPageEvent, value); }
+        //}
+        //public event RoutedEventHandler GotoPage
+        //{
+        //    add { AddHandler(GotoPageEvent, value); }
+        //    remove { RemoveHandler(GotoPageEvent, value); }
+        //}
+
         public event RoutedEventHandler PageChanged
         {
             add { AddHandler(PageChangedEvent, value); }
@@ -164,11 +165,11 @@ namespace WpfPaging.Controls
 
         static Paging()
         {
-            FirstPageEvent = EventManager.RegisterRoutedEvent("FirstPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
-            PreviousPageEvent = EventManager.RegisterRoutedEvent("PreviousPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
-            NextPageEvent = EventManager.RegisterRoutedEvent("NextPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
-            LastPageEvent = EventManager.RegisterRoutedEvent("LastPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
-            GotoPageEvent = EventManager.RegisterRoutedEvent("GotoPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
+            //FirstPageEvent = EventManager.RegisterRoutedEvent("FirstPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
+            //PreviousPageEvent = EventManager.RegisterRoutedEvent("PreviousPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
+            //NextPageEvent = EventManager.RegisterRoutedEvent("NextPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
+            //LastPageEvent = EventManager.RegisterRoutedEvent("LastPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
+            //GotoPageEvent = EventManager.RegisterRoutedEvent("GotoPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
             PageChangedEvent = EventManager.RegisterRoutedEvent("PageChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
             PageSizeChangedEvent = EventManager.RegisterRoutedEvent("PageSizeChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
             CurrentPageProperty = DependencyProperty.Register("CurrentPage", typeof(int), typeof(Paging), new PropertyMetadata(1, new PropertyChangedCallback(OnCurrentPageChanged)));
@@ -278,7 +279,8 @@ namespace WpfPaging.Controls
             {
                 this.SetLinkButtonFocus(_index);
             }
-            OnPageChanged(LastPageEvent);
+            //OnPageChanged(LastPageEvent);
+            OnPageChanged(PageChangedEvent);
         }
 
         /// <summary>
@@ -301,7 +303,8 @@ namespace WpfPaging.Controls
             {
                 this.SetLinkButtonFocus(_index);
             }
-            OnPageChanged(FirstPageEvent);
+            //OnPageChanged(FirstPageEvent);
+            OnPageChanged(PageChangedEvent);
         }
 
         /// <summary>
@@ -320,7 +323,8 @@ namespace WpfPaging.Controls
                 if (this.CurrentPage == this.PageCount)
                 {
                     this.SetLinkButtonFocus(_index);
-                    OnPageChanged(NextPageEvent);
+                    //OnPageChanged(NextPageEvent);
+                    OnPageChanged(PageChangedEvent);
                     return;
                 }
                 if (_index == PageNumber - 1)
@@ -342,7 +346,8 @@ namespace WpfPaging.Controls
             {
                 this.SetLinkButtonFocus(_index);
             }
-            OnPageChanged(NextPageEvent);
+            //OnPageChanged(NextPageEvent);
+            OnPageChanged(PageChangedEvent);
         }
 
         /// <summary>
@@ -362,7 +367,8 @@ namespace WpfPaging.Controls
                 if (this.CurrentPage == 1)
                 {
                     this.SetLinkButtonFocus(_index);
-                    OnPageChanged(PreviousPageEvent);
+                    //OnPageChanged(PreviousPageEvent);
+                    OnPageChanged(PageChangedEvent);
                     return;
                 }
                 if (_index == 0)
@@ -380,7 +386,8 @@ namespace WpfPaging.Controls
             {
                 this.SetLinkButtonFocus(_index);
             }
-            OnPageChanged(PreviousPageEvent);
+            //OnPageChanged(PreviousPageEvent);
+            OnPageChanged(PageChangedEvent);
         }
 
         /// <summary>
@@ -452,7 +459,8 @@ namespace WpfPaging.Controls
             {
                 this.SetLinkButtonFocus(_index);
             }
-            OnPageChanged(GotoPageEvent);
+            //OnPageChanged(GotoPageEvent);
+            OnPageChanged(PageChangedEvent);
         }
 
         private void PagenumBtn_Click(object sender, RoutedEventArgs e)
@@ -489,6 +497,7 @@ namespace WpfPaging.Controls
                 this.PageSize = Convert.ToInt32(item.Content.ToString());
                 this.GotoPageNum = CurrentPage;
                 OnPageSizeChanged();
+                OnPageChanged(PageChangedEvent);
             }
         }
 
@@ -502,8 +511,9 @@ namespace WpfPaging.Controls
             if (sender is ComboBox combobox)
             {
                 var item = combobox.SelectedItem as ComboBoxItem;
-                this.PageSize = Convert.ToInt32(item.Content.ToString());    
+                this.PageSize = Convert.ToInt32(item.Content.ToString());
                 OnPageSizeChanged();
+                OnPageChanged(PageChangedEvent);
             }
         }
 
@@ -571,10 +581,11 @@ namespace WpfPaging.Controls
                     var pagenumBtn = new Button()
                     {
                         Content = (i + 1).ToString(),
-                        Width = double.NaN,
-                        Margin = new Thickness(3, 0, 3, 0),
+                        Width = 17,
+                        Margin = new Thickness(2, 0, 2, 0),
                         BorderThickness = new Thickness(1, 0, 0, 0),
                         VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center,
                         Style = Application.Current.FindResource("PageNumberButton") as Style
                     };
                     this.mCurrentPagers.Add((i + 1));
@@ -593,10 +604,11 @@ namespace WpfPaging.Controls
                     var pagenumBtn = new Button()
                     {
                         Content = (i + 1).ToString(),
-                        Width = double.NaN,
-                        Margin = new Thickness(3, 0, 3, 0),
+                        Width = 17,
+                        Margin = new Thickness(2, 0, 2, 0),
                         BorderThickness = new Thickness(1, 0, 0, 0),
                         VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center,
                         Style = Application.Current.FindResource("PageNumberButton") as Style
                     };
                     pagenumBtn.Click += PagenumBtn_Click;
@@ -827,11 +839,15 @@ namespace WpfPaging.Controls
                 {
                     var beforepagenumBtn = this.PART_Content.Children[i] as Button;
                     beforepagenumBtn.Foreground = Brushes.Black;    //Set page number button color
+                    beforepagenumBtn.Background = Brushes.PowderBlue;
+                    beforepagenumBtn.IsEnabled = true;
                     if (i == _index)
                     {
                         //this.PART_Content.Children[_index].Focus();
                         var pagenumBtn = this.PART_Content.Children[_index] as Button;
-                        pagenumBtn.Foreground = Brushes.Red;    //Set the page number button color of the current page
+                        pagenumBtn.Foreground = Brushes.White;    //Set the page number button color of the current page
+                        pagenumBtn.Background = Brushes.DodgerBlue;
+                        pagenumBtn.IsEnabled = false;
                     }
                 }
             }
@@ -841,11 +857,14 @@ namespace WpfPaging.Controls
                 {
                     var beforepagenumBtn = this.PART_Content.Children[i] as Button;
                     beforepagenumBtn.Foreground = Brushes.Black;
+                    beforepagenumBtn.Background = Brushes.PowderBlue;
                     if (i == _index)
                     {
                         // this.PART_Content.Children[_index].Focus();
                         var pagenumBtn = this.PART_Content.Children[_index] as Button;
-                        pagenumBtn.Foreground = Brushes.Red;
+                        pagenumBtn.Foreground = Brushes.White;
+                        pagenumBtn.Background = Brushes.DodgerBlue;
+                        pagenumBtn.IsEnabled = false;
                     }
                 }
             }
@@ -853,7 +872,7 @@ namespace WpfPaging.Controls
 
         protected virtual void OnPageChanged(RoutedEvent routed)
         {
-            var eventArgs = new PageChangedEventArgs(this.CurrentPage) { RoutedEvent = routed, Source = this };
+            var eventArgs = new PageChangedEventArgs(this.CurrentPage,this.PageSize) { RoutedEvent = routed, Source = this };
             this.RaiseEvent(eventArgs);
         }
         protected virtual void OnPageSizeChanged()
@@ -880,9 +899,11 @@ namespace WpfPaging.Controls
     public class PageChangedEventArgs : RoutedEventArgs
     {
         public int PageIndex { get; set; }
-        public PageChangedEventArgs(int pageIndex) : base()
+        public int PageSize { get; set; }
+        public PageChangedEventArgs(int pageIndex,int pageSize) : base()
         {
             PageIndex = pageIndex;
+            PageSize = pageSize;
         }
     }
     public class PageSizeChangedEventArgs : RoutedEventArgs

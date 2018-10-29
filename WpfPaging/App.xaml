@@ -6,7 +6,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/WpfPaging;component/Style/Controls.Button.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/WpfPaging;component/Style/Paging.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

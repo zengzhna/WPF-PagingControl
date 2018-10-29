@@ -80,10 +80,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Style\Controls.Button.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Style\Paging.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

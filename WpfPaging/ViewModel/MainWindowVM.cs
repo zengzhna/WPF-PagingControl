@@ -23,30 +23,19 @@ namespace WpfPaging.ViewModel
 
         public List<DataGridListModel> List { get; set; }
         public List<DataGridListModel> ItemsSourceList { get => _ItemsSourceList; set { _ItemsSourceList = value; RaisePropertyChanged("ItemsSourceList"); } }
-        public int PageCount { get ; set ; }
+        //public int PageCount { get ; set ; }
         public int PageSize { get; set; }
-        public int CurrentPage { get ; set ; }
+        public int CurrentPage { get; set; }
         public int Total { get => _Total; set { _Total = value; RaisePropertyChanged("Total"); } }
-        public int GotoPageNum { get ; set ; }
+        //public int GotoPageNum { get ; set ; }
 
-         
-        public DelegateCommand FirstPageCommand { get; set; }
-        public DelegateCommand PreviousPageCommand { get; set; }
-        public DelegateCommand NextPageCommand { get; set; }
-        public DelegateCommand LastPageCommand { get; set; }
-        public DelegateCommand GotoPageCommand { get; set; }
         public DelegateCommand PageChangedCommand { get; set; }
-        public DelegateCommand PageSizeChangedCommand { get; set; }
+        //public DelegateCommand PageSizeChangedCommand { get; set; }
 
         private void InitCommand()
         {
-            FirstPageCommand = new DelegateCommand(OnFirstPageCommand);
-            PreviousPageCommand = new DelegateCommand(OnPreviousPageCommand);
-            NextPageCommand = new DelegateCommand(OnNextPageCommand);
-            LastPageCommand = new DelegateCommand(OnLastPageCommand);
-            GotoPageCommand = new DelegateCommand(OnGotoPageCommand);
             PageChangedCommand = new DelegateCommand(OnPageChangedCommand);
-            PageSizeChangedCommand = new DelegateCommand(OnPageSizeChangedCommand);
+            //PageSizeChangedCommand = new DelegateCommand(OnPageSizeChangedCommand);
         }
 
         private void InitData()
@@ -58,35 +47,14 @@ namespace WpfPaging.ViewModel
             }
             Total = List.Count;
         }
-
-        private void OnFirstPageCommand()
-        {
-            RefreshPage();
-        }
-        private void OnPreviousPageCommand()
-        {
-            RefreshPage();
-        }
-        private void OnNextPageCommand()
-        {
-            RefreshPage();
-        }
-        private void OnLastPageCommand()
-        {
-            RefreshPage();
-        }
-        private void OnGotoPageCommand()
-        {
-            RefreshPage();
-        }
         private void OnPageChangedCommand()
         {
             RefreshPage();
         }
-        private void OnPageSizeChangedCommand()
-        {
-            RefreshPage();
-        }
+        //private void OnPageSizeChangedCommand()
+        //{
+        //    RefreshPage();
+        //}
         private void RefreshPage()
         {
             if (List != null)
