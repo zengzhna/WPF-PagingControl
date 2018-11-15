@@ -53,7 +53,7 @@ namespace WpfPaging.Controls
 
         private PagerType mPagerType = PagerType.Default;  //Current paging control type, complex, default
         private List<int> mCurrentPagers = new List<int>(); //The page number index displayed by the current paging control
-        private int PageNumber = 5;  //Generate maximum page number
+        private int PageNumber = 7;  //Generate maximum page number
 
         #endregion
 
@@ -114,42 +114,8 @@ namespace WpfPaging.Controls
 
         #region RoutedEvent
 
-        //public static readonly RoutedEvent FirstPageEvent;
-        //public static readonly RoutedEvent PreviousPageEvent;
-        //public static readonly RoutedEvent NextPageEvent;
-        //public static readonly RoutedEvent LastPageEvent;
-        //public static readonly RoutedEvent GotoPageEvent;
         public static readonly RoutedEvent PageChangedEvent;
         public static readonly RoutedEvent PageSizeChangedEvent;
-
-        //public event RoutedEventHandler FirstPage
-        //{
-        //    add { AddHandler(FirstPageEvent, value); }
-        //    remove { RemoveHandler(FirstPageEvent, value); }
-        //}
-
-        //public event RoutedEventHandler PreviousPage
-        //{
-        //    add { AddHandler(PreviousPageEvent, value); }
-        //    remove { RemoveHandler(PreviousPageEvent, value); }
-        //}
-
-        //public event RoutedEventHandler NextPage
-        //{
-        //    add { AddHandler(NextPageEvent, value); }
-        //    remove { RemoveHandler(NextPageEvent, value); }
-        //}
-
-        //public event RoutedEventHandler LastPage
-        //{
-        //    add { AddHandler(LastPageEvent, value); }
-        //    remove { RemoveHandler(LastPageEvent, value); }
-        //}
-        //public event RoutedEventHandler GotoPage
-        //{
-        //    add { AddHandler(GotoPageEvent, value); }
-        //    remove { RemoveHandler(GotoPageEvent, value); }
-        //}
 
         public event RoutedEventHandler PageChanged
         {
@@ -165,11 +131,6 @@ namespace WpfPaging.Controls
 
         static Paging()
         {
-            //FirstPageEvent = EventManager.RegisterRoutedEvent("FirstPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
-            //PreviousPageEvent = EventManager.RegisterRoutedEvent("PreviousPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
-            //NextPageEvent = EventManager.RegisterRoutedEvent("NextPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
-            //LastPageEvent = EventManager.RegisterRoutedEvent("LastPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
-            //GotoPageEvent = EventManager.RegisterRoutedEvent("GotoPage", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
             PageChangedEvent = EventManager.RegisterRoutedEvent("PageChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
             PageSizeChangedEvent = EventManager.RegisterRoutedEvent("PageSizeChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Paging));
             CurrentPageProperty = DependencyProperty.Register("CurrentPage", typeof(int), typeof(Paging), new PropertyMetadata(1, new PropertyChangedCallback(OnCurrentPageChanged)));
@@ -858,6 +819,7 @@ namespace WpfPaging.Controls
                     var beforepagenumBtn = this.PART_Content.Children[i] as Button;
                     beforepagenumBtn.Foreground = Brushes.Black;
                     beforepagenumBtn.Background = Brushes.PowderBlue;
+                    beforepagenumBtn.IsEnabled = true;
                     if (i == _index)
                     {
                         // this.PART_Content.Children[_index].Focus();

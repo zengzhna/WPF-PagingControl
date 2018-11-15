@@ -10,17 +10,19 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*" MaxHeight="40" MinHeight="25"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.1*" MaxHeight="40" MinHeight="25"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="datagrid" CanUserAddRows="False" AutoGenerateColumns="False"
+        <Button Command="{Binding ChangedCommand}"></Button>
+        <DataGrid Grid.Row="1" x:Name="datagrid" CanUserAddRows="False" AutoGenerateColumns="False"
                   ItemsSource="{Binding ItemsSourceList}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="id" Binding="{Binding ID}" Width="120"></DataGridTextColumn>
                 <DataGridTextColumn Header="name" Binding="{Binding Name}" Width="120"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <controls:Paging x:Name="paging" Grid.Row="1" VerticalAlignment="Center"
+        <controls:Paging x:Name="paging" Grid.Row="2" VerticalAlignment="Center"
                          PageSize="{Binding PageSize, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          PageCount="{Binding PageCount,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          Total="{Binding Total, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
