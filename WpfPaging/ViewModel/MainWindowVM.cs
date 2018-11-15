@@ -19,23 +19,30 @@ namespace WpfPaging.ViewModel
 
         private List<DataGridListModel> _ItemsSourceList;
         private int _Total;
-
+        private int _pageSize;
 
         public List<DataGridListModel> List { get; set; }
         public List<DataGridListModel> ItemsSourceList { get => _ItemsSourceList; set { _ItemsSourceList = value; RaisePropertyChanged("ItemsSourceList"); } }
         //public int PageCount { get ; set ; }
-        public int PageSize { get; set; }
+        public int PageSize { get => _pageSize; set { _pageSize = value; RaisePropertyChanged("PageSize"); } }
         public int CurrentPage { get; set; }
         public int Total { get => _Total; set { _Total = value; RaisePropertyChanged("Total"); } }
         //public int GotoPageNum { get ; set ; }
 
         public DelegateCommand PageChangedCommand { get; set; }
         //public DelegateCommand PageSizeChangedCommand { get; set; }
+        public DelegateCommand ChangedCommand { get; set; }
 
         private void InitCommand()
         {
             PageChangedCommand = new DelegateCommand(OnPageChangedCommand);
             //PageSizeChangedCommand = new DelegateCommand(OnPageSizeChangedCommand);
+            ChangedCommand = new DelegateCommand(OnChangedCommand);
+        }
+
+        private void OnChangedCommand()
+        {
+            Total = 0;
         }
 
         private void InitData()
@@ -59,7 +66,8 @@ namespace WpfPaging.ViewModel
         {
             if (List != null)
             {
-                ItemsSourceList = List.Where(x => x.ID >= (CurrentPage - 1) * PageSize && x.ID < CurrentPage * PageSize).ToList();
+                //ItemsSourceList = List.SkipWhile((n, index) => index < (CurrentPage - 1) * PageSize && index < CurrentPage * PageSize).ToList();
+                ItemsSourceList = List.FindAll(x => x.ID >= (CurrentPage - 1) * PageSize && x.ID < CurrentPage * PageSize);
             }
         }
 
