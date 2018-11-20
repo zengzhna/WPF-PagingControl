@@ -2,6 +2,47 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WpfPaging.Controls">
 
+    <Style x:Key="SwitchPageButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Border x:Name="PART_Background"
+                              Background="{TemplateBinding Background}"
+                              Opacity="0" />
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Opacity="0.75"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#ADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Opacity" Value="0.9"/>
+                <Setter Property = "Foreground" Value="Blue"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="PageNumberButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="PowderBlue"></Setter>
         <Setter Property="Template">
@@ -46,12 +87,36 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button x:Name="PART_FirstPage" Background="PowderBlue" Content="First" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
-                            <Button x:Name="PART_PreviousPage" Background="PowderBlue" Content="Previous" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
+                            <Button Padding="2" Style="{StaticResource SwitchPageButtonStyle}" 
+                                    x:Name="PART_FirstPage" Background="Transparent" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                                <Path Data="F1M21.8408,21.875C17.5248,21.875,14.0278,25.372,14.0278,29.688L14.0278,170.312C14.0278,174.628,17.5238,178.126,21.8408,178.126C26.1558,178.126,29.6538,174.629,29.6538,170.312L29.6538,29.688C29.6528,25.372,26.1558,21.875,21.8408,21.875 M164.0258,25.412L69.7028,85.916C57.6308,93.662,57.6308,106.334,69.7028,114.078L164.0258,174.584C176.0958,182.331,185.9748,176.932,185.9748,162.587L185.9748,37.409C185.9788,23.068,176.0998,17.669,164.0258,25.412"  
+                                      Height="15" Width="15" Stretch="Fill"
+                                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                      SnapsToDevicePixels="True"></Path>
+                            </Button>
+                            <Button Padding="2" Style="{StaticResource SwitchPageButtonStyle}" 
+                                    x:Name="PART_PreviousPage" Background="Transparent" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                                <Path Data="F1M141.0254,25.4121L46.7034,85.9161C34.6304,93.6621,34.6304,106.3341,46.7034,114.0781L141.0254,174.5841C153.0954,182.3311,162.9744,176.9321,162.9744,162.5871L162.9744,37.4091C162.9784,23.0681,153.0994,17.6691,141.0254,25.4121"  
+                                      Height="15" Width="15" Stretch="Fill"
+                                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                      SnapsToDevicePixels="True"></Path>
+                            </Button>
                             <StackPanel x:Name="PART_Content" Orientation="Horizontal">
                             </StackPanel>
-                            <Button x:Name="PART_NextPage" Background="PowderBlue" Content="Next" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
-                            <Button x:Name="PART_LastPage" Background="PowderBlue" Content="Last" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}"></Button>
+                            <Button Padding="2" Style="{StaticResource SwitchPageButtonStyle}" 
+                                    x:Name="PART_NextPage" Background="Transparent" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                                <Path Data="F1M57.8291,173.5937L153.5701,115.3617C165.8241,107.9067,166.1271,95.2377,154.2431,87.2077L61.3921,24.4657C49.5101,16.4317,39.5051,21.5957,39.1631,35.9347L36.1731,161.0777C35.8261,175.4127,45.5731,181.0477,57.8291,173.5937"  
+                                      Height="15" Width="15" Stretch="Fill"
+                                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                      SnapsToDevicePixels="True"></Path>
+                            </Button>
+                            <Button Padding="2" Style="{StaticResource SwitchPageButtonStyle}" 
+                                    x:Name="PART_LastPage" Background="Transparent" Height="auto" Margin="0,0,5,0" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                                <Path Data="F1M178.1621,178.125C182.4781,178.125,185.9741,174.628,185.9741,170.313L185.9741,29.688C185.9741,25.372,182.4781,21.875,178.1621,21.875C173.8471,21.875,170.3501,25.372,170.3501,29.688L170.3501,170.313C170.3501,174.628,173.8471,178.125,178.1621,178.125 M35.9781,174.588L130.3001,114.084C142.3721,106.338,142.3721,93.666,130.3001,85.922L35.9781,25.416C23.9061,17.669,14.0281,23.069,14.0281,37.413L14.0281,162.591C14.0251,176.932,23.9031,182.331,35.9781,174.588"  
+                                      Height="15" Width="15" Stretch="Fill"
+                                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                      SnapsToDevicePixels="True"></Path>
+                            </Button>
                             <TextBlock VerticalAlignment="Center" Margin="0,0,20,0">
                                 <Run Text="Count:"/>
                                 <Run x:Name="PART_PageCount" Text="{TemplateBinding PageCountText}"/>

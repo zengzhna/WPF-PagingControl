@@ -30,7 +30,7 @@
                          GotoPageNum="{Binding GotoPageNum, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PageChanged">
-                    <prism:InvokeCommandAction Command="{Binding PageChangedCommand}"/>
+                    <i:InvokeCommandAction Command="{Binding PageChangedCommand}"/>
                 </i:EventTrigger>
                 <!--<i:EventTrigger EventName="PageSizeChanged">
                     <prism:InvokeCommandAction Command="{Binding PageSizeChangedCommand}"/>

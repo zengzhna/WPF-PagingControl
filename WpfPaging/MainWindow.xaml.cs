@@ -25,5 +25,10 @@ namespace WpfPaging
             InitializeComponent();
             this.DataContext = new ViewModel.MainWindowVM();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
